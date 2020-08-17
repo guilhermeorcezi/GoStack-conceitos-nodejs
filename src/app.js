@@ -43,9 +43,11 @@ app.put('/repositories/:id', (request, response) => {
 	}
 
 	newRepository = {
+		id: repositories[repositoryIndex].id,
 		title,
 		url,
 		techs,
+		likes: repositories[repositoryIndex].likes,
 	};
 
 	repositories[repositoryIndex] = newRepository;
@@ -75,20 +77,20 @@ app.post('/repositories/:id/like', (request, response) => {
 	);
 
 	if (repositoryIndex < 0) {
-    return response.status(400).send();
-  }
-  
-  newRepository = {
-    id: repositories[repositoryIndex].id,
-    title: repositories[repositoryIndex].title,
-    url: repositories[repositoryIndex].url,
-    techs: repositories[repositoryIndex].techs,
-    likes: repositories[repositoryIndex].likes + 1,
-  }
+		return response.status(400).send();
+	}
 
-  repositories[repositoryIndex] = newRepository;
-  
-  return response.json(newRepository);
+	newRepository = {
+		id: repositories[repositoryIndex].id,
+		title: repositories[repositoryIndex].title,
+		url: repositories[repositoryIndex].url,
+		techs: repositories[repositoryIndex].techs,
+		likes: repositories[repositoryIndex].likes + 1,
+	};
+
+	repositories[repositoryIndex] = newRepository;
+
+	return response.json(newRepository);
 });
 
 module.exports = app;
